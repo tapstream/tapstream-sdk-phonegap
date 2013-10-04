@@ -5,10 +5,6 @@
     id="com.tapstream.phonegap"
     version="1.0.0">
 
-    <engines>
-        <engine name="cordova" version=">=2.3.0" />
-    </engines>
-    
     <name>Tapstream</name>
     <description>Official Tapstream marketing analytics SDK (http://tapstream.com)</description>
     <license>MIT</license>
