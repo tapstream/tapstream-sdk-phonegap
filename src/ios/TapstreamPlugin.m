@@ -23,14 +23,26 @@
         {
             for(NSString *key in configVals)
             {
-                if([config respondsToSelector:NSSelectorFromString(key)])
+                if([key isEqualToString:@"globalEventParams"])
                 {
-                    NSObject *value = [configVals objectForKey:key];
-                    [config setValue:value forKey:key];
+                    NSDictionary *globalEventParams = [configVals objectForKey:key];
+                    for(NSString *eventParamName in globalEventParams)
+                    {
+                        NSObject *value = [globalEventParams objectForKey:eventParamName];
+                        [config.globalEventParams setValue:value forKey:eventParamName];
+                    }
                 }
                 else
                 {
-                    NSLog(@"Ignoring config field named '%@', probably not meant for this platform.", key);
+                    if([config respondsToSelector:NSSelectorFromString(key)])
+                    {
+                        NSObject *value = [configVals objectForKey:key];
+                        [config setValue:value forKey:key];
+                    }
+                    else
+                    {
+                        NSLog(@"Ignoring config field named '%@', probably not meant for this platform.", key);
+                    }
                 }
             }
         }
@@ -63,40 +75,7 @@
             for(NSString *key in params)
             {
                 id value = [params objectForKey:key];
-                if([value isKindOfClass:[NSString class]])
-                {
-                    [event addValue:(NSString *)value forKey:(NSString *)key];
-                }
-                else if([value isKindOfClass:[NSNumber class]])
-                {
-                    NSNumber *number = (NSNumber *)value;
-                    
-                    if(strcmp([number objCType], @encode(int)) == 0)
-                    {
-                        [event addIntegerValue:[number intValue] forKey:key];
-                    }
-                    else if(strcmp([number objCType], @encode(uint)) == 0)
-                    {
-                        [event addUnsignedIntegerValue:[number unsignedIntValue] forKey:key];
-                    }
-                    else if(strcmp([number objCType], @encode(double)) == 0 ||
-                        strcmp([number objCType], @encode(float)) == 0)
-                    {
-                        [event addDoubleValue:[number doubleValue] forKey:key];
-                    }
-                    else if(strcmp([number objCType], @encode(BOOL)) == 0)
-                    {
-                        [event addBooleanValue:[number boolValue] forKey:key];
-                    }
-                    else
-                    {
-                        NSLog(@"Tapstream Event cannot accept an NSNumber param holding this type, skipping param");
-                    }
-                }
-                else
-                {
-                    NSLog(@"Tapstream Event cannot accept a param of this type, skipping param");
-                }
+                [event addValue:value forKey:key];
             }
         }
 

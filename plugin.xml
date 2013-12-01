@@ -3,8 +3,12 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.tapstream.phonegap"
-    version="1.0.0">
+    version="2.5.0">
 
+    <engines>
+        <engine name="cordova" version=">=2.3.0" />
+    </engines>
+    
     <name>Tapstream</name>
     <description>Official Tapstream marketing analytics SDK (http://tapstream.com)</description>
     <license>MIT</license>
@@ -48,30 +52,7 @@
         <source-file src="src/ios/TapstreamPlugin.m" />
         <header-file src="src/ios/TapstreamPlugin.h" />
 
-        <source-file src="src/ios/Tapstream/TSConfig.m" />
-        <source-file src="src/ios/Tapstream/TSCore.m" />
-        <source-file src="src/ios/Tapstream/TSCoreListenerImpl.m" />
-        <source-file src="src/ios/Tapstream/TSEvent.m" />
-        <source-file src="src/ios/Tapstream/TSHit.m" />
-        <source-file src="src/ios/Tapstream/TSLogging.m" />
-        <source-file src="src/ios/Tapstream/TSPlatformImpl.m" />
-        <source-file src="src/ios/Tapstream/TSResponse.m" />
-        <source-file src="src/ios/Tapstream/TSTapstream.m" />
-        <header-file src="src/ios/Tapstream/TSApi.h" />
-        <header-file src="src/ios/Tapstream/TSConfig.h" />
-        <header-file src="src/ios/Tapstream/TSCore.h" />
-        <header-file src="src/ios/Tapstream/TSCoreListener.h" />
-        <header-file src="src/ios/Tapstream/TSCoreListenerImpl.h" />
-        <header-file src="src/ios/Tapstream/TSDelegate.h" />
-        <header-file src="src/ios/Tapstream/TSEvent.h" />
-        <header-file src="src/ios/Tapstream/TSHelpers.h" />
-        <header-file src="src/ios/Tapstream/TSHit.h" />
-        <header-file src="src/ios/Tapstream/TSLogging.h" />
-        <header-file src="src/ios/Tapstream/TSLogLevel.h" />
-        <header-file src="src/ios/Tapstream/TSPlatform.h" />
-        <header-file src="src/ios/Tapstream/TSPlatformImpl.h" />
-        <header-file src="src/ios/Tapstream/TSResponse.h" />
-        <header-file src="src/ios/Tapstream/TSTapstream.h" />
+{{ ios_sources }}
 
     </platform>
 </plugin>
