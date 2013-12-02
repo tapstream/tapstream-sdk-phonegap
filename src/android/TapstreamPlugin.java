@@ -119,7 +119,7 @@ public class TapstreamPlugin extends CordovaPlugin {
             }
         }
 
-        Tapstream.create(this.cordova.getActivity().getApplicationContext(), accountName, developerSecret, config);
+        Tapstream.create(this.cordova.getActivity().getApplication(), accountName, developerSecret, config);
     }
 
     private void fireEvent(String eventName, boolean oneTimeOnly, JSONObject params) throws JSONException {
