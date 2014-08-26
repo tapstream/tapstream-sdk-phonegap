@@ -23,7 +23,13 @@
         {
             for(NSString *key in configVals)
             {
-                if([config respondsToSelector:NSSelectorFromString(key)])
+                if([key isEqualToString:@"custom_parameters"]){
+                    NSObject *value = [configVals objectForKey:key];
+                    if([value isKindOfClass:[NSDictionary class]]){
+                        [config setValue:[value mutableCopy] forKey:@"globalEventParams"];
+                    }
+                }
+                else if ([config respondsToSelector:NSSelectorFromString(key)])
                 {
                     NSObject *value = [configVals objectForKey:key];
                     [config setValue:value forKey:key];

@@ -13,6 +13,7 @@
 #else
 @synthesize serialNumber = serialNumber;
 #endif
+@synthesize globalEventParams = globalEventParams;
 
 @synthesize collectWifiMac = collectWifiMac;
 

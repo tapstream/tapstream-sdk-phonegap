@@ -9,16 +9,19 @@
 	NSString *name;
 	NSString *encodedName;
 	BOOL oneTimeOnly;
+    NSMutableDictionary *customFields;
 	NSMutableString *postData;
 }
 
 @property(nonatomic, STRONG_OR_RETAIN, readonly) NSString *uid;
 @property(nonatomic, STRONG_OR_RETAIN, readonly) NSString *name;
 @property(nonatomic, STRONG_OR_RETAIN, readonly) NSString *encodedName;
+@property(nonatomic, STRONG_OR_RETAIN, readonly) NSMutableDictionary *customFields;
 @property(nonatomic, STRONG_OR_RETAIN, readonly) NSString *postData;
 @property(nonatomic, assign, readonly) BOOL oneTimeOnly;
 
 + (id)eventWithName:(NSString *)name oneTimeOnly:(BOOL)oneTimeOnly;
+- (void)prepare:(NSDictionary *)globalEventParams;
 - (void)addValue:(NSString *)value forKey:(NSString *)key;
 - (void)addIntegerValue:(int)value forKey:(NSString *)key;
 - (void)addUnsignedIntegerValue:(uint)value forKey:(NSString *)key;
