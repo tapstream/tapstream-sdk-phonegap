@@ -16,7 +16,7 @@
 
 @implementation TSEvent
 
-@synthesize uid, name, encodedName, oneTimeOnly, postData;
+@synthesize uid, name, encodedName, oneTimeOnly, postData, customFields;
 
 + (id)eventWithName:(NSString *)eventName oneTimeOnly:(BOOL)oneTimeOnlyArg
 {
@@ -40,6 +40,30 @@
 {
 	return AUTORELEASE((BRIDGE_TRANSFER NSString *)CFURLCreateStringByAddingPercentEscapes(
 		NULL, (CFStringRef)s, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
+}
+
+- (void)prepare:(NSDictionary *)globalEventParams
+{
+	// Only record the time of the first fire attempt
+	if(firstFiredTime == 0)
+	{
+		firstFiredTime = [[NSDate date] timeIntervalSince1970];
+        
+		for(NSString *key in globalEventParams)
+		{
+			if([self.customFields objectForKey:key] == nil)
+			{
+				[self addValue:[globalEventParams valueForKey:key] forKey:key];
+			}
+		}
+        
+		[postData appendString:[NSString stringWithFormat:@"&created-ms=%.0f", firstFiredTime*1000]];
+		
+		for(NSString *key in self.customFields)
+		{
+			[self addValue:[self.customFields objectForKey:key] forKey:key];
+		}
+	}
 }
 
 - (void)addValue:(NSString *)value forKey:(NSString *)key

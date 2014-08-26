@@ -81,7 +81,21 @@ public class TapstreamPlugin extends CordovaPlugin {
                 }
 
                 try {
-                    if(value instanceof String) {
+                    // Special cases first
+                    if(key.equals("custom_parameters") && value instanceof JSONObject){
+                        Map<String, Object> globalEventParams = new HashMap<String, Object>();
+                        JSONObject globalEventParamVals = ((JSONObject) value);
+                        Iterator<?> innerIter = globalEventParamVals.keys();
+
+                        while(innerIter.hasNext()){
+                            String innerKey = (String) innerIter.next();
+                            Object innerValue = globalEventParamVals.get(innerKey);
+                            globalEventParams.put(innerKey, innerValue);
+                        }
+                        config.globalEventParams = globalEventParams;
+
+                    // Generic reflection next
+                    } else if(value instanceof String) {
                         Method method = lookupMethod(key, String.class);
                         if(method != null) {
                             method.invoke(config, (String)value);
@@ -110,7 +124,7 @@ public class TapstreamPlugin extends CordovaPlugin {
             }
         }
 
-        Tapstream.create(this.cordova.getActivity().getApplicationContext(), accountName, developerSecret, config);
+        Tapstream.create(this.cordova.getActivity().getApplication(), accountName, developerSecret, config);
     }
 
     private void fireEvent(String eventName, boolean oneTimeOnly, JSONObject params) throws JSONException {

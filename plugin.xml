@@ -31,7 +31,27 @@
         </config-file>
 
         <source-file src="src/android/TapstreamPlugin.java" target-dir="src/com/tapstream/phonegap" />
-        <source-file src="src/android/Tapstream.jar" target-dir="libs"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/ActivityEventSource.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Api.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Config.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/ConversionListener.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Core.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/CoreListener.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Delegate.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Event.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Hit.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Logger.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Logging.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Platform.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Response.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Core/com/tapstream/sdk/Utils.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/AdvertisingIdFetcher.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/api14/ActivityCallbacks.java" target-dir="src/com/tapstream/sdk/api14"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/CoreListenerImpl.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/PlatformImpl.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/ReferrerReceiver.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/Tapstream.java" target-dir="src/com/tapstream/sdk"/>
+        <source-file src="src/android/Tapstream/com/tapstream/sdk/WorkerThread.java" target-dir="src/com/tapstream/sdk"/>
     </platform>
     
     <platform name="ios">

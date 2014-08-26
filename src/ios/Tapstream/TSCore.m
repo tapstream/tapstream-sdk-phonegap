@@ -119,8 +119,11 @@
 {
 	@synchronized(self)
 	{
+        [e prepare:config.globalEventParams];
+        
 		// Notify the event that we are going to fire it so it can record the time
 		[e firing];
+
 
 		if(e.oneTimeOnly)
 		{
