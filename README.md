@@ -41,7 +41,7 @@ window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
 
 **For Android projects, it is mandatory that you include the Google Play Services SDK.**
 
-### <a class="fragment-link" id="extra-events" href="#extra-events">Firing extra events</a>
+### Firing extra events
 
 By default, Tapstream fires an event whenever a user runs the app. You can define further events for recording key actions in your app by using the syntax below:
 
@@ -63,7 +63,7 @@ window.tapstream.fireEvent('install', true, {
 });
 ```
 
-## <a class="fragment-link" href="#global-event-params" id="global-event-params">Global custom event parameters</a>
+## Global custom event parameters
 
 You may find that you have some data that needs to be attached to every single event sent by the Tapstream SDK,
 including your Install and Open events.. Instead of writing the code to attach this data in each place that you send an event,
@@ -79,7 +79,7 @@ window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
 });
 ```
 
-## <a class="fragment-link" id="changing-defaults" href="#changing-defaults">Changing the default behavior of the Tapstream SDK</a>
+## Changing the default behavior of the Tapstream SDK
 
 **Note**: Changing this behavior is not usually required.
 
@@ -98,7 +98,7 @@ window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
 
 Consult the platform-specific SDK documentation to see what config variables are available.  Don't use accessor methods; instead, just set the variables directly, using camel-case capitalization
 
-## <a class="fragment-link" id="first-run-modification" href="#first-run-modification">First-run app experience modification</a>
+## First-run app experience modification
 
 The Tapstream SDK gives you a mechanism for receiving a callback that will contain
 everything Tapstream knows about the user's timeline, including any links the user
@@ -175,14 +175,14 @@ An example JSON response might look like this:
 If you wish to simulate conversions to test this functionality, please refer to the documentation on
 [simulating Tapstream conversions]({% url 'developer_simulating_conversions' %}).
 
-## <a class="fragment-link" href="#deeplinking" id="deeplinking">Deep linking when the user doesn't already have the app</a>
+## Deep linking when the user doesn't already have the app
 
 Tapstream's [first-run modification](#first-run-modification) lets you deeplink your users to different parts of
 your app, even if they didn't already have it. Parse the JSON response and look for the custom parameter called
 `__deeplink`. This parameter's value is the deeplink destination that your user would have been sent to when
 clicking your campaign link, had they already had the app.
 
-## <a class="fragment-link" href="#preventing-conflicts" id="preventing-conflicts">Preventing conflicts with Tapstream's JavaScript</a>
+## Preventing conflicts with Tapstream's JavaScript
 
 If you're using your website inside of PhoneGap, and your website loads Tapstream's JavaScript, you need to modify your Tapstream JavaScript before proceeding.
 
