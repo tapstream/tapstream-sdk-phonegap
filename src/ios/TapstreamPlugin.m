@@ -28,6 +28,7 @@
                     if([value isKindOfClass:[NSDictionary class]]){
                         [config setValue:[value mutableCopy] forKey:@"globalEventParams"];
                     }
+                    NSLog(@"%@", value);
                 }
                 else if ([config respondsToSelector:NSSelectorFromString(key)])
                 {
@@ -115,4 +116,24 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)getConversionData:(CDVInvokedUrlCommand *)command
+{
+    [self.commandDelegate runInBackground:^{
+        TSTapstream *tracker = [TSTapstream instance];
+        [tracker getConversionData:^(NSData *jsonInfo) {
+            CDVPluginResult* pluginResult = nil;
+
+            if(jsonInfo != nil)
+            {
+                NSError *error = nil;
+                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonInfo options:kNilOptions error:&error];
+                if(json && !error)
+                {
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:json];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            }
+        }];
+    }];
+}
 @end

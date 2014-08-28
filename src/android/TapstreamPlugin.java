@@ -44,6 +44,20 @@ public class TapstreamPlugin extends CordovaPlugin {
                 }
             });
             return true;
+        } else if(action.equals("getConversionData")){
+
+            final TapstreamPlugin self = this;
+            final CallbackContext cc = callbackContext;
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    try {
+                        self.getConversionData(cc);
+                    } catch(Exception ex) {
+                        Log.e(self.getClass().getSimpleName(), "Tapstream.getConversionData failed: " + ex.toString());
+                    }
+                }
+            });
+            return true;
         }
         return false;
     }
@@ -139,4 +153,18 @@ public class TapstreamPlugin extends CordovaPlugin {
         Tapstream.getInstance().fireEvent(e);
     }
 
+    private void getConversionData(final CallbackContext callbackContext){
+        Tapstream.getInstance().getConversionData(new ConversionListener() {
+            @Override
+            public void conversionData(String jsonData) {
+                if(jsonData != null) {
+                    try {
+                        callbackContext.success(new JSONObject(jsonData));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 }

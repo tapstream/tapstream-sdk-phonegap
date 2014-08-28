@@ -68,6 +68,7 @@
         <source-file src="src/ios/TapstreamPlugin.m" />
         <header-file src="src/ios/TapstreamPlugin.h" />
 
+        <source-file src="src/ios/Tapstream/TSUtils.m" />
         <source-file src="src/ios/Tapstream/TSConfig.m" />
         <source-file src="src/ios/Tapstream/TSCore.m" />
         <source-file src="src/ios/Tapstream/TSCoreListenerImpl.m" />
@@ -76,7 +77,9 @@
         <source-file src="src/ios/Tapstream/TSLogging.m" />
         <source-file src="src/ios/Tapstream/TSPlatformImpl.m" />
         <source-file src="src/ios/Tapstream/TSResponse.m" />
+        <source-file src="src/ios/Tapstream/TSAppEventSourceImpl.m" />
         <source-file src="src/ios/Tapstream/TSTapstream.m" />
+        <header-file src="src/ios/Tapstream/TSUtils.h" />
         <header-file src="src/ios/Tapstream/TSApi.h" />
         <header-file src="src/ios/Tapstream/TSConfig.h" />
         <header-file src="src/ios/Tapstream/TSCore.h" />
@@ -91,7 +94,9 @@
         <header-file src="src/ios/Tapstream/TSPlatform.h" />
         <header-file src="src/ios/Tapstream/TSPlatformImpl.h" />
         <header-file src="src/ios/Tapstream/TSResponse.h" />
+        <header-file src="src/ios/Tapstream/TSAppEventSource.h" />
+        <header-file src="src/ios/Tapstream/TSAppEventSourceImpl.h" />
+        <header-file src="src/ios/Tapstream/TSWordOfMouthDelegate.h" />
         <header-file src="src/ios/Tapstream/TSTapstream.h" />
-
     </platform>
 </plugin>
