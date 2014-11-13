@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Core {
-	public static final String VERSION = "2.7.1";
+	public static final String VERSION = "2.8.0";
 	private static final String EVENT_URL_TEMPLATE = "https://api.tapstream.com/%s/event/%s/";
 	private static final String HIT_URL_TEMPLATE = "http://api.tapstream.com/%s/hit/%s.gif";
 	private static final String CONVERSION_URL_TEMPLATE = "https://reporting.tapstream.com/v1/timelines/lookup?secret=%s&event_session=%s";
@@ -182,20 +182,6 @@ class Core {
 		Runnable task = new Runnable() {
 			public void innerRun() {
 
-				if(config.getCollectTasteData()) {
-					data.append("&processes=");
-					Set<String> processSet = platform.getProcessSet();
-					StringBuilder processes = new StringBuilder();
-					String[] processArray = processSet.toArray(new String[0]);
-					for(int i = 0; i < processArray.length; i++) {
-						if(i != 0) {
-							processes.append(',');
-						}
-						processes.append(processArray[i]);
-					}
-					data.append(Utils.encodeString(processes.toString()));
-				}
-				
 				Response response = platform.request(url, data.toString(), "POST");
 				boolean failed = response.status < 200 || response.status >= 300;
 				boolean shouldRetry = response.status < 0 || (response.status >= 500 && response.status < 600);
