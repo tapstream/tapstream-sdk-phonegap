@@ -3,12 +3,12 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.tapstream.phonegap"
-    version="1.0.2">
+    version="1.0.3">
 
     <name>Tapstream</name>
     <description>Official Tapstream marketing analytics SDK (http://tapstream.com)</description>
     <license>MIT</license>
-    
+
     <js-module src="www/tapstream.js" name="Tapstream">
         <clobbers target="window.tapstream" />
     </js-module>
@@ -53,7 +53,7 @@
         <source-file src="src/android/Tapstream/com/tapstream/sdk/Tapstream.java" target-dir="src/com/tapstream/sdk"/>
         <source-file src="src/android/Tapstream/com/tapstream/sdk/WorkerThread.java" target-dir="src/com/tapstream/sdk"/>
     </platform>
-    
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <access origin="https://api.tapstream.com" />
