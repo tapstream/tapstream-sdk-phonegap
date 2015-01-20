@@ -19,10 +19,10 @@ This will download the Tapstream plugin and add it to your project. (Note that o
 
 ### Using Tapstream with PhoneGap Build
 
-If you're using Adobe PhoneGap Build, add the following to your `config.xml` to use version 1.0.1 of this plugin (recommended):
+If you're using Adobe PhoneGap Build, add the following to your `config.xml` to use version 1.0.4 of this plugin (recommended):
 
 ```xml
-<gap:plugin name="com.tapstream.phonegap" version="1.0.1" />
+<gap:plugin name="com.tapstream.phonegap" version="1.0.4" />
 ```
 
 You can also omit the version tag to always use the most recent version of this plugin. Note that this will result in your app being automatically updated with new versions of the plugin as they are released, and may result in unexpected behaviour.
