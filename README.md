@@ -12,8 +12,6 @@ Based on SDK versions:
 
 ## Integrating the Tapstream PhoneGap SDK
 
-### Using Tapstream without PhoneGap Build
-
 From your main project directory, run:
 
 ```bash
