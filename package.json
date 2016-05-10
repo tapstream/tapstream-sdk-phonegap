@@ -1,0 +1,27 @@
+{
+  "name": "tapstream-sdk-phonegap",
+  "version": "2.0.0",
+  "description": "Official Tapstream marketing analytics SDK (https://tapstream.com)",
+  "cordova": {
+    "id": "com.tapstream.phonegap",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tapstream/tapstream-sdk-phonegap.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Nick Sitarz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tapstream/tapstream-sdk-phonegap/issues"
+  },
+  "homepage": "https://tapstream.com/developer/phonegap/integration/"
+}
