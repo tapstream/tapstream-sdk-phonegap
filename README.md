@@ -5,6 +5,11 @@ tapstream-sdk-phonegap
 
 Tapstream is a marketing SDK that lets you instantly work with hundreds of ad networks, measeure ARPU and retention from any traffic source, and modify your app's user experience depending on what your users were doing before they installed it.
 
+## Upstream SDK versions
+
+* Android: 3.0.4
+* iOS: 2.8.5
+
 ## Integrating the Tapstream PhoneGap SDK
 
 ### Using Tapstream without PhoneGap Build
@@ -12,20 +17,10 @@ Tapstream is a marketing SDK that lets you instantly work with hundreds of ad ne
 From your main project directory, run:
 
 ```bash
-phonegap plugin add https://github.com/tapstream/tapstream-sdk-phonegap#2.0.0
+phonegap plugin add tapstream-sdk-phonegap
 ```
 
 This will download the Tapstream plugin and add it to your project. (Note that only iOS and Android PhoneGap projects are supported.)
-
-### Using Tapstream with PhoneGap Build
-
-If you're using Adobe PhoneGap Build, add the following to your `config.xml` to use version 2.0.0 of this plugin (recommended):
-
-```xml
-<plugin name="com.tapstream.phonegap" spec="2.0.0" source="pgb" />
-```
-
-You can also omit the version tag to always use the most recent version of this plugin. Note that this will result in your app being automatically updated with new versions of the plugin as they are released, and may result in unexpected behaviour.
 
 ## Initialize the Tapstream SDK
 
