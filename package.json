@@ -1,6 +1,6 @@
 {
   "name": "tapstream-sdk-phonegap",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Official Tapstream marketing analytics SDK (https://tapstream.com)",
   "cordova": {
     "id": "com.tapstream.phonegap",
