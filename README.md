@@ -5,7 +5,7 @@ tapstream-sdk-phonegap
 
 Tapstream is a marketing SDK that lets you instantly work with hundreds of ad networks, measeure ARPU and retention from any traffic source, and modify your app's user experience depending on what your users were doing before they installed it.
 
-## Upstream SDK versions
+Based on SDK versions:
 
 * Android: 3.0.4
 * iOS: 2.8.5
