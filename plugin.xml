@@ -3,10 +3,10 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.tapstream.phonegap"
-    version="1.0.5">
+    version="2.0.0">
 
     <name>Tapstream</name>
-    <description>Official Tapstream marketing analytics SDK (http://tapstream.com)</description>
+    <description>Official Tapstream marketing analytics SDK (https://tapstream.com)</description>
     <license>MIT</license>
 
     <js-module src="www/tapstream.js" name="Tapstream">
@@ -14,11 +14,8 @@
     </js-module>
 
     <platform name="android">
-        <config-file target="res/xml/config.xml" parent="/*">
-            <access origin="https://api.tapstream.com" />
-        </config-file>
 
-        <config-file target="res/xml/config.xml" parent="/*">
+        <config-file target="config.xml" parent="/*">
             <feature name="Tapstream">
                 <param name="android-package" value="com.tapstream.phonegap.TapstreamPlugin"/>
             </feature>
@@ -26,44 +23,22 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.INTERNET" />
-            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
 
         <source-file src="src/android/TapstreamPlugin.java" target-dir="src/com/tapstream/phonegap" />
-        <source-file src="src/android/Core/com/tapstream/sdk/ActivityEventSource.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Api.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Config.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/ConversionListener.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Core.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/CoreListener.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Delegate.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Event.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Hit.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Logger.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Logging.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Platform.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Response.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Core/com/tapstream/sdk/Utils.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/AdvertisingIdFetcher.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/api14/ActivityCallbacks.java" target-dir="src/com/tapstream/sdk/api14"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/CoreListenerImpl.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/PlatformImpl.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/ReferrerReceiver.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/Tapstream.java" target-dir="src/com/tapstream/sdk"/>
-        <source-file src="src/android/Tapstream/com/tapstream/sdk/WorkerThread.java" target-dir="src/com/tapstream/sdk"/>
+
+        <framework src="com.tapstream.sdk:tapstream-android:3.0.4" />
+
     </platform>
 
     <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <access origin="https://api.tapstream.com" />
-        </config-file>
 
         <config-file target="config.xml" parent="/*">
             <feature name="Tapstream">
                 <param name="ios-package" value="TapstreamPlugin"/>
             </feature>
         </config-file>
+
 
         <source-file src="src/ios/TapstreamPlugin.m" />
         <header-file src="src/ios/TapstreamPlugin.h" />

@@ -10,8 +10,8 @@
     NSString *accountName = [command.arguments objectAtIndex:0];
     NSString *developerSecret = [command.arguments objectAtIndex:1];
     NSDictionary *configVals = [command.arguments objectAtIndex:2];
-    
-    if(accountName == nil || developerSecret == nil)
+
+    if((id)accountName == [NSNull null] || (id)developerSecret == [NSNull null])
     {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
@@ -19,7 +19,7 @@
     {
         TSConfig *config = [TSConfig configWithDefaults];
 
-        if(configVals != nil)
+        if(configVals != [NSNull null])
         {
             for(NSString *key in configVals)
             {
@@ -28,7 +28,6 @@
                     if([value isKindOfClass:[NSDictionary class]]){
                         [config setValue:[value mutableCopy] forKey:@"globalEventParams"];
                     }
-                    NSLog(@"%@", value);
                 }
                 else if ([config respondsToSelector:NSSelectorFromString(key)])
                 {
@@ -46,7 +45,7 @@
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
-    
+
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
@@ -57,14 +56,19 @@
     NSNumber *oneTimeOnly = [command.arguments objectAtIndex:1];
     NSDictionary *params = [command.arguments objectAtIndex:2];
 
-    if((id)eventName == [NSNull null] || (id)oneTimeOnly == [NSNull null])
+    if ((id)oneTimeOnly == [NSNull null])
+    {
+        oneTimeOnly = [NSNumber numberWithBool:NO];
+    }
+
+    if((id)eventName == [NSNull null])
     {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
     else
     {
         TSEvent *event = [TSEvent eventWithName:eventName oneTimeOnly:[oneTimeOnly boolValue]];
-        
+
         if((id)params != [NSNull null])
         {
             for(NSString *key in params)
@@ -77,7 +81,7 @@
                 else if([value isKindOfClass:[NSNumber class]])
                 {
                     NSNumber *number = (NSNumber *)value;
-                    
+
                     if(strcmp([number objCType], @encode(int)) == 0)
                     {
                         [event addIntegerValue:[number intValue] forKey:key];
@@ -116,7 +120,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)getConversionData:(CDVInvokedUrlCommand *)command
+- (void)lookupTimeline:(CDVInvokedUrlCommand *)command
 {
     [self.commandDelegate runInBackground:^{
         TSTapstream *tracker = [TSTapstream instance];

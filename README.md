@@ -1,6 +1,6 @@
 Current documentation for Tapstream's PhoneGap plugin is available on [Tapstream's developer portal](https://tapstream.com/developer/phonegap-sdk-documentation/).
 
-phonegap3-plugin
+tapstream-sdk-phonegap
 ================
 
 Tapstream is a marketing SDK that lets you instantly work with hundreds of ad networks, measeure ARPU and retention from any traffic source, and modify your app's user experience depending on what your users were doing before they installed it.
@@ -12,17 +12,17 @@ Tapstream is a marketing SDK that lets you instantly work with hundreds of ad ne
 From your main project directory, run:
 
 ```bash
-phonegap local plugin add https://github.com/tapstream/phonegap3-plugin
+phonegap plugin add https://github.com/tapstream/tapstream-sdk-phonegap#2.0.0
 ```
 
 This will download the Tapstream plugin and add it to your project. (Note that only iOS and Android PhoneGap projects are supported.)
 
 ### Using Tapstream with PhoneGap Build
 
-If you're using Adobe PhoneGap Build, add the following to your `config.xml` to use version 1.0.5 of this plugin (recommended):
+If you're using Adobe PhoneGap Build, add the following to your `config.xml` to use version 2.0.0 of this plugin (recommended):
 
 ```xml
-<gap:plugin name="com.tapstream.phonegap" version="1.0.5" />
+<plugin name="com.tapstream.phonegap" spec="2.0.0" source="pgb" />
 ```
 
 You can also omit the version tag to always use the most recent version of this plugin. Note that this will result in your app being automatically updated with new versions of the plugin as they are released, and may result in unexpected behaviour.
@@ -32,14 +32,14 @@ You can also omit the version tag to always use the most recent version of this 
 Initialize Tapstream from your `onDeviceReady:` function like this:
 
 ```javascript
-window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
-    idfa: '<IDFA goes here>'
+tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
+    // (Optional) Config overrides go here
 });
 ```
 
 **For iOS projects, we strongly recommend that you collect and provide the iOS Advertising Identifier (IDFA) value to the Tapstream SDK.** Please see [Apple's documentation on collecting the IDFA](http://developer.apple.com/library/ios/#documentation/AdSupport/Reference/ASIdentifierManager_Ref/ASIdentifierManager.html).
 
-**For Android projects, it is mandatory that you include the Google Play Services SDK.**
+**For Android projects, it is strongly recommended that you include the Google Play Services SDK.**
 
 ### Firing extra events
 
@@ -47,18 +47,18 @@ By default, Tapstream fires an event whenever a user runs the app. You can defin
 
 ```javascript
 // Regular event:
-window.tapstream.fireEvent('test-event', false);
+tapstream.fireEvent('test-event', false);
 
 // Regular event with custom params:
-window.tapstream.fireEvent('test-event', false, {
+tapstream.fireEvent('test-event', false, {
     'my-custom-param': 3,
 });
 
 // One-time-only event:
-window.tapstream.fireEvent('install', true);
+tapstream.fireEvent('install', true);
 
 // One-time-only event with custom params:
-window.tapstream.fireEvent('install', true, {
+tapstream.fireEvent('install', true, {
     'my-custom-param': 'hello world',
 });
 ```
@@ -71,8 +71,7 @@ add these data values to the global event parameters member of the config object
 will automatically be attached to every event, including the automatic events fired by the SDK.
 
 ```javascript
-window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
-    idfa: '<IDFA goes here>',
+tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
     custom_parameters: {
       some_key: "value"
    }
@@ -86,7 +85,7 @@ window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
 To change the default Tapstream config, provide config overrides like this:
 
 ```javascript
-window.tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
+tapstream.create('TAPSTREAM_ACCOUNT_NAME', 'TAPSTREAM_SDK_SECRET', {
     idfa: '<IDFA goes here>',
     collectDeviceId: true,
     collectWifiMac: false,
@@ -111,7 +110,7 @@ request this info from the SDK.
 Here's how it works:
 
 ```javascript
-window.tapstream.getConversionData(function(jsonData){
+tapstream.lookupTimeline(function(jsonData){
     if(jsonData){
         // Read some data from this json object, and modify your application's behavior accordingly
     }

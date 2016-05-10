@@ -2,7 +2,6 @@ package com.tapstream.phonegap;
 
 import android.util.Log;
 import com.tapstream.sdk.*;
-import java.lang.reflect.Method;
 import java.util.*;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -10,160 +9,117 @@ import org.json.*;
 
 public class TapstreamPlugin extends CordovaPlugin {
 
+    private static final String TAG = "TapstreamPlugin";
+
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if(action.equals("create")) {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if("create".equals(action)) {
             final String accountName = args.getString(0);
             final String developerSecret = args.getString(1);
             final JSONObject config = args.optJSONObject(2);
-
-            final TapstreamPlugin self = this;
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    try {
-                        self.create(accountName, developerSecret, config);
-                    } catch(JSONException ex) {
-                        Log.e(self.getClass().getSimpleName(), "Tapstream.create failed: " + ex.toString());
-                    }
-                }
-            });
+            create(accountName, developerSecret, config);
             return true;
-        } else if(action.equals("fireEvent")) {
+        } else if("fireEvent".equals(action)) {
             final String eventName = args.getString(0);
-            final boolean oneTimeOnly = args.getBoolean(1);
+            final boolean oneTimeOnly = args.optBoolean(1);
             final JSONObject params = args.optJSONObject(2);
-
-            final TapstreamPlugin self = this;
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    try {
-                        self.fireEvent(eventName, oneTimeOnly, params);
-                    } catch(JSONException ex) {
-                        Log.e(self.getClass().getSimpleName(), "Tapstream.fireEvent failed: " + ex.toString());
-                    }
-                }
-            });
+            fireEvent(eventName, oneTimeOnly, params);
             return true;
-        } else if(action.equals("getConversionData")){
-
-            final TapstreamPlugin self = this;
-            final CallbackContext cc = callbackContext;
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    try {
-                        self.getConversionData(cc);
-                    } catch(Exception ex) {
-                        Log.e(self.getClass().getSimpleName(), "Tapstream.getConversionData failed: " + ex.toString());
-                    }
-                }
-            });
+        } else if("lookupTimeline".equals(action)){
+            lookupTimeline(callbackContext);
             return true;
         }
         return false;
     }
 
-    private Method lookupMethod(String propertyName, Class argType) {
-        String methodName = propertyName;
-        if(methodName.length() > 0) {
-            methodName = Character.toUpperCase(methodName.charAt(0)) + methodName.substring(1);
-        }
-        methodName = "set" + methodName;
-        
-        Method method = null;
-        try {
-            method = Config.class.getMethod(methodName, argType);
-        } catch (NoSuchMethodException e) {
-            Log.i(getClass().getSimpleName(), "Ignoring config field named '" + propertyName + "', probably not meant for this platform.");
-        } catch(Exception e) {
-            Log.e(getClass().getSimpleName(), "Error getting Config setter method: " + e.getMessage());
-        }
-        return method;
-    }
-
     private void create(String accountName, String developerSecret, JSONObject configVals) throws JSONException {
-        Config config = new Config();
+        final Config config = new Config(accountName, developerSecret);
+        config.setActivityListenerBindsLate(true);
 
-        if(configVals != null) {
-            Iterator<?> iter = configVals.keys();
-            while(iter.hasNext()) {
-                String key = (String)iter.next();
-                Object value = configVals.get(key);
+        if (configVals != null){
 
-                if(value == null) {
-                    Log.e(getClass().getSimpleName(), "Config object will not accept null values, skipping field named: " + key);
+            Iterator<String> configKeyIter = configVals.keys();
+
+            while (configKeyIter.hasNext()){
+                final String key = configKeyIter.next();
+                final Object value = configVals.get(key);
+
+                if (value == null)
                     continue;
-                }
 
-                try {
-                    // Special cases first
-                    if(key.equals("custom_parameters") && value instanceof JSONObject){
-                        Map<String, Object> globalEventParams = new HashMap<String, Object>();
-                        JSONObject globalEventParamVals = ((JSONObject) value);
-                        Iterator<?> innerIter = globalEventParamVals.keys();
+                if ("custom_parameters".equals(key) && value instanceof JSONObject){
+                    final JSONObject params = (JSONObject)value;
+                    Iterator<String> paramKeyIter = params.keys();
 
-                        while(innerIter.hasNext()){
-                            String innerKey = (String) innerIter.next();
-                            Object innerValue = globalEventParamVals.get(innerKey);
-                            globalEventParams.put(innerKey, innerValue);
-                        }
-                        config.globalEventParams = globalEventParams;
-
-                    // Generic reflection next
-                    } else if(value instanceof String) {
-                        Method method = lookupMethod(key, String.class);
-                        if(method != null) {
-                            method.invoke(config, (String)value);
-                        }
-                    } else if(value instanceof Boolean) {
-                        Method method = lookupMethod(key, boolean.class);
-                        if(method != null) {
-                            method.invoke(config, (Boolean)value);
-                        }
-                    } else if(value instanceof Integer) {
-                        Method method = lookupMethod(key, int.class);
-                        if(method != null) {
-                            method.invoke(config, (Integer)value);
-                        }
-                    } else if(value instanceof Float) {
-                        Method method = lookupMethod(key, float.class);
-                        if(method != null) {
-                            method.invoke(config, (Float)value);
-                        }
-                    } else {
-                        Log.e(getClass().getSimpleName(), "Config object will not accept type: " + value.getClass().toString());
+                    while (paramKeyIter.hasNext()){
+                        String paramKey = paramKeyIter.next();
+                        Object paramValue = params.get(paramKey);
+                        if (paramValue != null)
+                            config.setGlobalEventParameter(paramKey, paramValue);
                     }
-                } catch(Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error setting field on config object (key=" + key + "). " + e.getMessage());
-                }
+                } else if ("odin1".equals(key))
+                    config.setOdin1(value.toString());
+                else if ("openUdid".equals(key))
+                    config.setOpenUdid(value.toString());
+                else if ("deviceId".equals(key))
+                    config.setDeviceId(value.toString());
+                else if ("wifiMac".equals(key))
+                    config.setWifiMac(value.toString());
+                else if ("androidId".equals(key))
+                    config.setAndroidId(value.toString());
+                else if ("installEventName".equals(key))
+                    config.setInstallEventName(value.toString());
+                else if ("openEventName".equals(key))
+                    config.setOpenEventName(value.toString());
+                else if ("fireAutomaticInstallEvent".equals(key))
+                    config.setFireAutomaticInstallEvent(Boolean.parseBoolean(value.toString()));
+                else if ("fireAutomaticOpenEvent".equals(key))
+                    config.setFireAutomaticOpenEvent(Boolean.parseBoolean(value.toString()));
+                else if ("collectAdvertisingId".equals(key))
+                    config.setCollectAdvertisingId(Boolean.parseBoolean(value.toString()));
+                else
+                    Log.w(TAG, "Skipping unknown config key: " + key);
             }
         }
 
-        Tapstream.create(this.cordova.getActivity().getApplication(), accountName, developerSecret, config);
+
+        Tapstream.create(cordova.getActivity().getApplication(), config);
     }
 
     private void fireEvent(String eventName, boolean oneTimeOnly, JSONObject params) throws JSONException {
         Event e = new Event(eventName, oneTimeOnly);
         if(params != null) {
-            Iterator<?> iter = params.keys();
-            while(iter.hasNext()) {
-                String key = (String)iter.next();
-                e.addPair(key, params.get(key));
+            Iterator<String> paramKeyIter = params.keys();
+            while (paramKeyIter.hasNext()){
+                String key = paramKeyIter.next();
+                Object value = params.get(key);
+                if (value != null)
+                    e.setCustomParameter(key, value.toString());
             }
         }
         Tapstream.getInstance().fireEvent(e);
     }
 
-    private void getConversionData(final CallbackContext callbackContext){
-        Tapstream.getInstance().getConversionData(new ConversionListener() {
+    private void lookupTimeline(final CallbackContext callbackContext){
+        Tapstream.getInstance()
+                .lookupTimeline()
+                .setCallback(new Callback<TimelineApiResponse>(){
             @Override
-            public void conversionData(String jsonData) {
-                if(jsonData != null) {
-                    try {
-                        callbackContext.success(new JSONObject(jsonData));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            public void success(TimelineApiResponse resp){
+                try{
+                    callbackContext.success(resp.parse());
+                } catch (Exception e){
+                    String msg = "Failed to parse timeline response";
+                    Log.e(TAG, msg, e);
+                    callbackContext.error(msg);
                 }
+            }
+
+            @Override
+            public void error(Throwable reason){
+                String msg = "Error during timeline lookup";
+                Log.e(TAG, msg, reason);
+                callbackContext.error(msg);
             }
         });
     }
