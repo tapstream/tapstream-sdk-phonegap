@@ -3,7 +3,7 @@ Current documentation for Tapstream's PhoneGap plugin is available on [Tapstream
 tapstream-sdk-phonegap
 ================
 
-Tapstream is a marketing SDK that lets you instantly work with hundreds of ad networks, measeure ARPU and retention from any traffic source, and modify your app's user experience depending on what your users were doing before they installed it.
+Tapstream is a marketing SDK that lets you instantly work with hundreds of ad networks, measure ARPU and retention from any traffic source, and modify your app's user experience depending on what your users were doing before they installed it.
 
 Based on SDK versions:
 

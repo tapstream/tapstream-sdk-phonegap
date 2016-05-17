@@ -3,7 +3,7 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.tapstream.phonegap"
-    version="2.0.2">
+    version="2.0.3">
 
     <name>Tapstream</name>
     <description>Official Tapstream marketing analytics SDK (https://tapstream.com)</description>
@@ -27,7 +27,7 @@
 
         <source-file src="src/android/TapstreamPlugin.java" target-dir="src/com/tapstream/phonegap" />
 
-        <framework src="com.tapstream.sdk:tapstream-android:3.0.4" />
+        <framework src="com.tapstream.sdk:tapstream-android:3.1.0" />
 
     </platform>
 
